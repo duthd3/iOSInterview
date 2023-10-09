@@ -68,4 +68,14 @@ iOS 면접 질문 정리
   - 슬라이싱: 다양한 기기와 운영체제 버전에 대하여 여러 가지 app bundle의 변형(variants)을 생성하고 전달하는 과정
   - 비트코드: 비트코드는 컴파일된 프로그램의 중간표현(Intermediate Representation)이다.
   - 주문형 리소스: 이미지나 사운드 같은 리소스를 키워드로 태그할 수 있고, 태그별로 그룹을 요청할 수 있다.
+- 앱이 foreground에 있을 때와 background에 있을 때 어떤 제약사항이 있나요?
+  - foreground mode는 메모리 및 기타 시스템 리소스에 높은 우선순위를 가지며 시스템은 이러한 리소스를 사용할 수 있도록 필요에 따라 background 앱을 종료합니다.
+  - background mode는 가능한 적은 메모리공간을 사용해야 합니다.(시스템 리소스 해제, 메모리에서 해제 후 데이터를 디스크에 작성) 사용자 이벤트를 받기 어렵고 공유 시스템 리소스를 해제하고 이미지 객체 참조 등 메모리 제한
+- 상태 변화에 따라 다른 동작을 처리하기 위한 앱델리게이트 메서드들을 설명하시오.
+  - 애플리케이션이 InActive 상태로 전환되기 직전에 홏출되는 applicationWillResignActive,
+  - 애플리케이션이 백그라운드 상태로 전환된 뒤 호출되는 applicationDidEnterBackground,
+  - 애플리케이션이 Active상태가 되기 전에 호출되는 applicationWillEnterForegroundm
+  - 애플리케이션이 Active상태로 전환된 후 호출하는 applicationDidBecomeActive,
+  - 애플리케이션이 종료되기 직전에 호출되는 applicationWillTerminate
+  - 
     
