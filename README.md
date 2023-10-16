@@ -77,5 +77,11 @@ iOS 면접 질문 정리
   - 애플리케이션이 Active상태가 되기 전에 호출되는 applicationWillEnterForegroundm
   - 애플리케이션이 Active상태로 전환된 후 호출하는 applicationDidBecomeActive,
   - 애플리케이션이 종료되기 직전에 호출되는 applicationWillTerminate
-  - 
-    
+- 앱이 In-Active 상태가 되는 시나오리를 설명하시오.
+  - 1. 사용자가 앱을 실행한다: Not running >> In-Active >> Active
+    2. 앱 실행 도중 홈버튼을 누른다: Active >> In-Active >> Background
+    3. 앱을 다시 켠다: Background >> In-Active >> Active
+    4. 앱이 백그라운드에 있다가 Suspended 상태로 전이: Active >> In-Active >> Background >> Suspended
+       
+    <img width="373" alt="스크린샷 2023-10-16 오후 5 28 38" src="https://github.com/duthd3/iOSInterview/assets/79510152/1f3246ea-0f54-4d4c-8bbf-4d6f3d3fa7d0">
+
