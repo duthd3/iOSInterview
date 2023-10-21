@@ -3,7 +3,7 @@ iOS 면접 질문 정리
 
 
 # iOS
-- Bounds와 Frame의 차이를 설명하시오.
+- ## Bounds와 Frame의 차이를 설명하시오.
   - frame과 bounds는 view의 위치와 크기를 나타낸다.
   - frame은 super view 좌표계에서 view의 위치와 크기를 나타낸다.
   - frame의 origin(x,y) 좌표는 super view의 원점을(0,0)으로 놓고, 원점으로부터 얼마나 멀어져있는지를 나타낸다.
@@ -15,7 +15,7 @@ iOS 면접 질문 정리
   - frame은 view의 위치와 크기를 나타낼 때 사용
   - bounds는 view를 회전한 후 view의 실제 크기를 알고싶을 때, view 내부에 그림을 그릴 때, scroll view에서 스크롤링 할 때 사용.
     
-- 실제 디바이스가 없을 경우 개발환경에서 할 수 있는 것과 할 수 없는 것을 설명하시오.
+- ## 실제 디바이스가 없을 경우 개발환경에서 할 수 있는 것과 할 수 없는 것을 설명하시오.
   - 하드웨어
     - 가속도 센서, 가압계 센서, 주변광 센서, GPS 센서 기능 불가
     - 마우스로 터치를 하기에 두 손가락으로 하는 줌인, 줌아웃을 할 수 없음
@@ -31,7 +31,7 @@ iOS 면접 질문 정리
     - 맥의 성능이 아이폰보다 뛰어나 CPU나 메모리에 얼마나 부담되는지 알 수 없음
     - 네트워크 속도 체크 불가
     - 페이스 아이디는 직접 얼굴 인식이 안되지만 인식됨, 안됨 처리는 가능
-- 앱의 콘텐츠나 데이터 자체를 저장/보관하는 특별한 객체를 무엇이라고 하는가?
+- ## 앱의 콘텐츠나 데이터 자체를 저장/보관하는 특별한 객체를 무엇이라고 하는가?
   - UserDefaults
     - 애플에서 기본 제공됨
     - key-value 쌍으로 저장하는 인터페이스
@@ -58,26 +58,26 @@ iOS 면접 질문 정리
   속도: Realm > CoreData > SQLite
   메모리 및 저장공간 사용: Realm > CoreData > SQLite
   ```
-- 앱 화면의 콘텐츠를 표시하는 로직과 관리를 담당하는 객체를 무엇이라고 하는가?
+- ## 앱 화면의 콘텐츠를 표시하는 로직과 관리를 담당하는 객체를 무엇이라고 하는가?
   - UIViewController
     - UIKit 앱의 뷰 계층 구조를 관리하는 객체이다. 뷰의 사용자 상호 작용에 응답한다. 전체 인터페이스의 레이아웃을 관리한다. 앱에서 다른 ViewController를 포함한 다른 객체들과 조정을 한다. 데이터가 변경되면 뷰의 콘텐츠를 업데이트 할 수 있다.
-- App thinning에 대해서 설명하시오.
+- ## App thinning에 대해서 설명하시오.
   - 애플리케이션이 디바이스에 설치될 때, 앱 스토어와 운영체제가 디바이스의 특성에 맞게 설치되도록 하는 설치 최적화 기술을 의미한다.
   - 최소한의 디스크 사용과 빠른 다운로드를 제공한다.
   - 구성으로는 슬라이싱(Slicing), 비트코드(bitcode), 주문형 리소스(on-demand resource)가 있다.
   - 슬라이싱: 다양한 기기와 운영체제 버전에 대하여 여러 가지 app bundle의 변형(variants)을 생성하고 전달하는 과정
   - 비트코드: 비트코드는 컴파일된 프로그램의 중간표현(Intermediate Representation)이다.
   - 주문형 리소스: 이미지나 사운드 같은 리소스를 키워드로 태그할 수 있고, 태그별로 그룹을 요청할 수 있다.
-- 앱이 foreground에 있을 때와 background에 있을 때 어떤 제약사항이 있나요?
+- ## 앱이 foreground에 있을 때와 background에 있을 때 어떤 제약사항이 있나요?
   - foreground mode는 메모리 및 기타 시스템 리소스에 높은 우선순위를 가지며 시스템은 이러한 리소스를 사용할 수 있도록 필요에 따라 background 앱을 종료합니다.
   - background mode는 가능한 적은 메모리공간을 사용해야 합니다.(시스템 리소스 해제, 메모리에서 해제 후 데이터를 디스크에 작성) 사용자 이벤트를 받기 어렵고 공유 시스템 리소스를 해제하고 이미지 객체 참조 등 메모리 제한
-- 상태 변화에 따라 다른 동작을 처리하기 위한 앱델리게이트 메서드들을 설명하시오.
+- ## 상태 변화에 따라 다른 동작을 처리하기 위한 앱델리게이트 메서드들을 설명하시오.
   - 애플리케이션이 InActive 상태로 전환되기 직전에 홏출되는 applicationWillResignActive,
   - 애플리케이션이 백그라운드 상태로 전환된 뒤 호출되는 applicationDidEnterBackground,
   - 애플리케이션이 Active상태가 되기 전에 호출되는 applicationWillEnterForegroundm
   - 애플리케이션이 Active상태로 전환된 후 호출하는 applicationDidBecomeActive,
   - 애플리케이션이 종료되기 직전에 호출되는 applicationWillTerminate
-- 앱이 In-Active 상태가 되는 시나오리를 설명하시오.
+- ## 앱이 In-Active 상태가 되는 시나오리를 설명하시오.
   - 1. 사용자가 앱을 실행한다: Not running >> In-Active >> Active
     2. 앱 실행 도중 홈버튼을 누른다: Active >> In-Active >> Background
     3. 앱을 다시 켠다: Background >> In-Active >> Active
@@ -87,9 +87,9 @@ iOS 면접 질문 정리
 - scene delegate에 대해 설명하시오.
   - iOS 13 이후 SceneDelegate가 등장하면서 AppDelegate는 Process Lifecycle과 Session Lifecycle을 담당하고, SceneDelegate는 UI와 관련된 Lifecycle을 담당하는 것으로 변경되었습니다.
 
-- UIApplication 객체의 컨트롤러 역할은 어디에 구현해야 하는가?
+- ## UIApplication 객체의 컨트롤러 역할은 어디에 구현해야 하는가?
   - UIApplicationMain 함수
-- App의 Not running, Inactive, Active, Background, Suspended에 대해 설명하시오.
+- ## App의 Not running, Inactive, Active, Background, Suspended에 대해 설명하시오.
   - Not running : app이 실행되지 않은 상태.
   - Inactive : app이 실행중이지만 사용자로부터 event를 받을 수 없는 상태.
   - Active : app이 실제 실행중이고 사용자 event를 받아서 상호작용할 수 있는 상태.
