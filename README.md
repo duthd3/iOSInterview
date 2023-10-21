@@ -87,5 +87,11 @@ iOS 면접 질문 정리
 - scene delegate에 대해 설명하시오.
   - iOS 13 이후 SceneDelegate가 등장하면서 AppDelegate는 Process Lifecycle과 Session Lifecycle을 담당하고, SceneDelegate는 UI와 관련된 Lifecycle을 담당하는 것으로 변경되었습니다.
 
- - UIApplication 객체의 컨트롤러 역할은 어디에 구현해야 하는가?
-   - UIApplicationMain 함수
+- UIApplication 객체의 컨트롤러 역할은 어디에 구현해야 하는가?
+  - UIApplicationMain 함수
+- App의 Not running, Inactive, Active, Background, Suspended에 대해 설명하시오.
+  - Not running : app이 실행되지 않은 상태.
+  - Inactive : app이 실행중이지만 사용자로부터 event를 받을 수 없는 상태.
+  - Active : app이 실제 실행중이고 사용자 event를 받아서 상호작용할 수 있는 상태.
+  - background : 홈화면으로 나가거나 다른 app으로 전환되어 app이 보이지 않는 곳에서 코드를 실행하고 있는 상태.
+  - suspended : 앱이 background 상태이며 앱이 메모리에 남아 있긴하나 코드를 실행하고 있지 않은 상태.
