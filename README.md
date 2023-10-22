@@ -95,3 +95,17 @@ iOS 면접 질문 정리
   - Active : app이 실제 실행중이고 사용자 event를 받아서 상호작용할 수 있는 상태.
   - background : 홈화면으로 나가거나 다른 app으로 전환되어 app이 보이지 않는 곳에서 코드를 실행하고 있는 상태.
   - suspended : 앱이 background 상태이며 앱이 메모리에 남아 있긴하나 코드를 실행하고 있지 않은 상태.
+- ## iOS 앱을 만들고, User Interface를 구성하는데 필수적인 프레임워크 이름은 무엇인가?
+  - UIKit
+    - UIKit Framework는 Gesture 처리, Animation, 그림 그리기, 이미지 처리, 텍스트 처리 등 UserEvent 처리.
+    - TableView, Slider, Button, TextField, Alert등 Application의 화면을 구성하는 요소 포함
+    - UIResponder에서 파생된 클래스나 UserInterface에 과련된 클래스는 Application의 Main Thread(Main Dispatch Queue)에서만 사용해야 함
+    - iOS, tvOS에 사용
+    - UserInterface
+      - View and Control: 화면에 콘텐츠 표시
+      - View Controller: 사용자 인터페이스 관리
+      - Animation and Haptics: 애니메이션과 햅틱을 통한 피드백 제공
+      - Window and Screen: 뷰 계층을 위한 윈도우 제공
+    - User Action
+      - Touch, Press, Gesture: 제스처 인식기를 통한 이벤트 처리 로직
+      - Drag and Drop: 화면 위에서 드래그 앤 드롭 기능 
