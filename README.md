@@ -108,4 +108,93 @@ iOS 면접 질문 정리
       - Window and Screen: 뷰 계층을 위한 윈도우 제공
     - User Action
       - Touch, Press, Gesture: 제스처 인식기를 통한 이벤트 처리 로직
-      - Drag and Drop: 화면 위에서 드래그 앤 드롭 기능 
+      - Drag and Drop: 화면 위에서 드래그 앤 드롭 기능
+      - 
+- ## Foundation Kit은 무엇이고 포함되어 있는 클래스들은 어떤 것이 있는지 설명하시오.
+  - Foundation Kit은 Cocoa Touch framework에 포함되어 있는 프레임워크 중 하나로 String, Int 등의 원시 데이터 타입과 컬렉션 타입 및 운영체제 서비스를 사용해 앱의 기본적인 기능을 관리하는 프레임워크입니다.
+  - iterator, jsonEncoder, jsonDecoder 와 같은 데이터 관련 클래스가 정의되어 있습니다.
+    - iterator: 배열이나 그와 유사한 자료 구조의 내부의 요소를 순회(traversing) 하는 객체이다.
+    - jsonEncoder: 데이터 유형의 인스턴스에서 JSON 개체로 변환하는 객체
+    - jsonDecoder: JSON 개체에서 데이터 유형의 인스턴스로 변환하는 객체
+      
+- ## Delegate란 무엇인지 설명하고, retain 되는지 안되는지 그 이유를 함께 설명하시오.
+  - Delegate란 객체 지향 프로그래밍에서 하나의 객체가 모든 일을 처리하는 것이 아니라 처리해야 할 일 중 일부를 다른 객체에게 넘기는 것을 의미한다.
+  - retain(유지하다): 메모리가 해제되지 않아서 낭비되는 현상을 의미(Memory Leak), Delegate는 객체 간의 작업이여서 참조 값을 사용하기 때문에 retain 현상이 일어난다.
+  - 해결방법: weak: 약한참조, unowned: 약한 참조이고 해제된 메모리 영역에 재접근하지 않는다는 확신이 있을 때
+    
+- ## NotificationCenter 동작 방식과 활용 방안에 대해 설명하시오.
+  - NotificationCenter란?
+    - observer(관찰자)에게 정보를 전달해주는 알림 발송 메커니즘
+  - 언제 NotificationCenter를 사용?
+    - 앱 내에서 공식적인 연결이 없는 두 개 이상의 컴포넌트들이 상호작용이 필요할 때
+    - 상호작용이 반복적으로 그리고 지속적으로 이루어져야 할 때
+    - 일대다 또는 다대다 통신을 사용하는 경우
+  - Observer(관찰자) 등록
+    ```swift
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(scrollToBottom), //알림을 받을 때 수행할 action
+      name: NSNotification.Name("TestNotification"),
+      object: nil
+    )
+    ```
+    - 알림을 받고 싶은 부분에 observer를 등록한다.
+      
+  - 알림 발송
+    ```swift
+    NotificationCenter.default.post(
+      name: NSNotification.Name("TestNotification"),
+      object: nil
+    )
+    ```
+    - observer에게 알림을 발송한다. 이때 object에 데이터도 함께 전달할 수 있다.
+
+  - Observer 제거  
+    ```swift
+    NotificationCenter.default.removeObserver(
+      self,
+      name: NSNotification.Name("TestNotification"),
+      object: nil
+    )
+    ```
+    - observer를 제거하지 않으면 메모리에 계속 남아있기 때문에 remove 해준다.
+  - extension을 활용하여 NotificationName 관리
+    ```swift
+    extension Notification.Name {
+      static let testNotification = Notification.Name("TestNotification")
+    }
+    ```
+- ## UIKit 클래스들을 다룰 때 꼭 처리해야하는 애플리케이션 쓰레드 이름은 무엇인가?
+  - Main Thread
+    UIApplication의 인스턴스가 main thread에 붙고(attach), 이 UIApplication은 앱을 시작할 때 인스턴스화 되는 앱의 첫번째 부분이고
+    앱의 run loop를 포함하여 main event loop를 설정하고 event 처리를 시작함.
+    앱의 main event loop는 touch, gesture등의 모든 UI event를 수신함.
+    모든 UI작업은 main thread의 '일부'라고 할 수 있다. 따라서 모든 이벤트는 main thread의 일부가 되며, main thread에서 처리해야 한다.
+    UIKit은 Thread-safe 하지 않다. 그래서 모든 처리를 Serial 하게 처리해줘야 한다. 그래서 UI는 main thread에서 synchronously하게 동작해야 한다.
+    
+- ## App Bundle의 구조와 역할에 대해 설명하시오.
+  - App Bundle은 iOS 앱을 실행하는데 필요한 모든 파일과 리소스가 포함된 특별한 유형의 폴더이다.
+  - Excudable file:
+    - 앱을 실제로 실행하는 파일이다. ".app" 확장자가 없는 앱과 이름이 동일하다. 예를 들어 앱 이름이 "MyCoolApp"인 경우 실행 파일 이름은 "MyCoolApp"이다.
+  - Info.plist:
+    - 앱에 대한 메타데이터가 포함된 속성 목록 파일이다. 여기에는 앱 이름, 버전 번호, 번들 식별자 등이 포함된다. 앱이 화면에 표시되는 방식과, 앱 아이콘, 필수 기기 기능, 접근 권한을 포함한다.
+  - Frameworks:
+    - 앱에서 타사 프레임워크를 사용하는 경우 AppBundle에 포함된다. "Frameworks" 폴더에서 찾을 수 있다.
+  - Resources:
+    - 앱의 모든 비 코드 파일이 저장되는 곳이다. 여기에는 이미지, 사운드, 지역화된 문자열 등이 포함된다. "Resouce" 폴더에서 찾을 수 있다.
+  - Storyboards & Xibs:
+    - 앱에서 스토리보드 또는 Xib를 사용하여 사용자 인터페이스를 정의하는 경우 AppBundle에 포함된다.
+  - Launch Screen:
+    - 앱이 실행될 때 표시되는 화면이다. "LaunchScreen.storyboard" 또는 "LaunchScreen.xib"라는 파일에 정의되어 있으며 AppBundle에 포함되어 있다.
+  - Plugins:
+    - 앱에서 플러그인을 사용하는 경우 AppBundle에 포함된다. "Plug-in" 폴더에서 찾을 수 있다.
+  - Excutable dependecies(실행 가능한 종속성):
+    - 앱이 외부라이브러리 또는 프레임워크에 연결되면 App Bundle에 포함된다.
+  - DataFiles:
+    - 앱이 런타임에 생성된 데이터 파일을 사용하는 경우 "Documents"폴더에 저장된다.
+    - 이 폴더는 앱이 설치될 때 생성되며 앱이 샌드박스에 있다.
+  이러한 모든 파일과 폴더는 AppBundle 내에 특정 방식으로 구성된다. 실행 파일은 info.plist 파일과 함께 최상위 수준에 있다.
+
+
+
+    
