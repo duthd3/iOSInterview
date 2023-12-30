@@ -238,5 +238,7 @@ iOS 면접 질문 정리
 
 # Architecture
 - ## MVVM, MVC, VIPER 아키텍쳐를 설명하시오.
-  - 
+  - MVVM: Model, View, ViewModel로 구성되고, ViewModel이 중간 역할, View와 ViewModel 사이에 binding이 있다. ViewModel은 Model에 변화를 주고 ViewModel을 업데이트 하는데 이 바인딩으로 인해 View도 업데이트. ViewModel은 View에 대해 아무것도 모르기 때문에 테스트가 쉽고 바인딩으로 인해 코드 양이 많이 줄어든다.
+  - MVC: Model, View, Controller로 구성되고, model에서는 애플리케이션이 사용할 데이터들을 관리하고, View는 유저 인터페이스를 표현 및 관리한다. Controller는 View와 Model의 다리 역할을 해 View의 입력을 Model이 반영하고, Model의 변화를 View에 갱신한다.
+  - VIPER: View, Interactor, Presenter, Entities, Router로 구성되고, MVC 패턴을 대체하기 위해 만들어진 패턴. Entity는 그저 모델 객체이다. 단순하게 어떤 모델의 속성들만 있는 Dumb Model이라고 부를 수 있다. 이 모델 객체를 조작하는 것이 바로 Interactor이다. 어떤 행동에 따라서 모델 객체를 조작하는 로직이 담겨있다. 작업이 완료되어도 View에 아무런 영향 없이 오로지 데이터 작업만 한다. Presenter는 데이터를 Interactor에서 가져오고, 언제 View에 보여줄 지 결정한다. View에 보여주기 전 내용을 준비하는 로직을 담당한다. View는 Presenter에서 어떻게 보여줘야 할 지 요청대로 디스플레이하고, 사용자의 입력을 받으면 다시 Presenter로 넘긴다. Router는 화면 전환을 담당한다. Presenter가 언제 화면을 전환해야 하는지 안다면 Router는 화면 전환을 어떻게 하는지 알고 있다.
   
