@@ -241,4 +241,31 @@ iOS 면접 질문 정리
   - MVVM: Model, View, ViewModel로 구성되고, ViewModel이 중간 역할, View와 ViewModel 사이에 binding이 있다. ViewModel은 Model에 변화를 주고 ViewModel을 업데이트 하는데 이 바인딩으로 인해 View도 업데이트. ViewModel은 View에 대해 아무것도 모르기 때문에 테스트가 쉽고 바인딩으로 인해 코드 양이 많이 줄어든다.
   - MVC: Model, View, Controller로 구성되고, model에서는 애플리케이션이 사용할 데이터들을 관리하고, View는 유저 인터페이스를 표현 및 관리한다. Controller는 View와 Model의 다리 역할을 해 View의 입력을 Model이 반영하고, Model의 변화를 View에 갱신한다.
   - VIPER: View, Interactor, Presenter, Entities, Router로 구성되고, MVC 패턴을 대체하기 위해 만들어진 패턴. Entity는 그저 모델 객체이다. 단순하게 어떤 모델의 속성들만 있는 Dumb Model이라고 부를 수 있다. 이 모델 객체를 조작하는 것이 바로 Interactor이다. 어떤 행동에 따라서 모델 객체를 조작하는 로직이 담겨있다. 작업이 완료되어도 View에 아무런 영향 없이 오로지 데이터 작업만 한다. Presenter는 데이터를 Interactor에서 가져오고, 언제 View에 보여줄 지 결정한다. View에 보여주기 전 내용을 준비하는 로직을 담당한다. View는 Presenter에서 어떻게 보여줘야 할 지 요청대로 디스플레이하고, 사용자의 입력을 받으면 다시 Presenter로 넘긴다. Router는 화면 전환을 담당한다. Presenter가 언제 화면을 전환해야 하는지 안다면 Router는 화면 전환을 어떻게 하는지 알고 있다.
-  
+# Autolayout
+- ## 오토레이아웃을 코드로 작성하는 방법은 무엇인가?(3가지)
+  - NSLayoutConstraint 사용
+  - Visual Format Language 사용
+  - Anchor 사용(코드가 더 clean해지고, 더 간결해지고, 더 읽기 쉬워진다.)
+  - 이외에 SnapKit과 같은 라이브러리 사용
+- ## hugging, resistance에 대해서 설명하시오.
+  - hugging: 두 오브젝트 중에 한 쪽이 커져야 하는 상황일 때 어떤 오브젝트가 Intrinsic Size를 유지 못하고 늘어날지를 결정한다. 우선순위가 높은 오브젝트가 Intrinsic Size를 유지, 낮은 오브젝트가 늘어난다.
+  - resistance: 두 오브젝트 중에 한 쪽이 작아져야 하는 상황일 때 어떤 오브젝트가 Intrinsic Size를 유지 못하고 줄어들지 결정한다. 우선순위가 높은 오브젝트가 Intrinsic Size를 유지, 낮은 오브젝트가 줄어든다.
+- ## Intrinsic Size에 대해서 설명하시오.
+  - Intrinsic Size는 콘텐츠의 본질적인 크기이다. 자신의 컨텐츠 사이즈에 따라서 결정되는 뷰 사이즈를 말한다. 모든 view가 Intrinsic Size를 갖는 것은 아니고, 대표적인 예로는 UILabel, UIButton을 들 수 있다.
+- ## 스토리보드를 이용했을때의 장단점을 설명하시오.
+  - 장점:
+    - 앱의 흐름을 직관적으로 볼 수 있음
+    - 드래그 앤 드롭으로 UI구성 가능
+    - 개발이 빠름
+  - 단점:
+    - 충돌시 해결어려움
+    - 스토리보드에 많은 컴포넌트들이 있으면 로딩시간이 오래걸림
+    - 컴포넌트가 많아질수록 세밀한 조정이 어렵다.
+- ## SafeArea에 대해서 설명하시오.
+  - 시스템에 의해 가려질 수 있는 부분에 대한 margin을 자체적으로 가지고 있는 영역을 뜻한다. 주로 해당 구역 내부에 view를 그려 노치 등에 의한 view의 가려짐을 방지한다.
+- ## Left Constraint와 Leading Constraint의 차이점을 설명하시오.
+  - Left와 Right는 절대적이며 뷰를 기준으로 각각 왼쪽과 오른쪽을 뜻한다. leading과 trailing은 각각 글자가 시작하는 방향과 끝나는 방향으로 device locale에 따라 leading이 left가 되기도 하고 right가 되기도 한다. 따라서 애플리케이션의 지역화를 지원해야 하는 경우 leading과 trailing의 사용을 권장한다. 추가로 WWDC 15 Mysteries of Auto Layout에 left/right보다 leading/trailing을 사용하라는 내용이 포함되어 있다.
+- ## Auto Layout과 Frame-based Layout의 차이점은 무엇인가?
+  - AutoLayout은 제약 조건을 이용해서 View의 위치나 크기를 정한다. 따라서 상대적으로 제약을 준다. 화면의 해상도에 따라 Frame이 동적으로 달라질 수 있다.
+  - Frame-based Layout은 무조건 원점에서 원하는 위치만큼 떨어진 곳에 view를 그린다. 어떤 해상도에서도 같은 크기와 위치를 유지한다. 따라서 기기가 변해도 frame은 절대 변하지 않는다.
+    
