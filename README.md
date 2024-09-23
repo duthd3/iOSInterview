@@ -202,6 +202,49 @@ iOS 면접 질문 정리
     - Xib을 생성하고 또한 별도의 UIView을 상속받은 Class을 생성한다. 그리고 Xib에서 owner로 해당 클래스를 임명하고 커스텀 클래스 내에서 초기화 시, Xib 파일을 불러와 view로 임명하는 코드 추가를 하고 원하는 작업들을 Storyboard 와 동일하게 수행하면 된다.
   - UIView을 상속해서 코드로만 구현
     - UIView을 상속받는 클래스를 생성해 코드로만 원하는 작업들을 설정한다.
+- ## View 객체에 대해 설명하시오.
+  - 화면에 content 표시, 그리기 및 애니메이션, 오토레이아웃, 제스처 인식 등 화면에 관한 것들을 담당하는 객체입니다. view는 사용자 인터페이스의 기본 구성 요소이며 모든 조작은 main thread에서 해야합니다.
+- ## UIView 에서 Layer 객체는 무엇이고 어떤 역할을 담당하는지 설명하시오.Permalink
+  - 렌더링에 사용되는 뷰의 CoreAnimation계층 UIView를 지원해주고 실질적으로 뷰위에 컨텐츠와 애니메이션을 그리는 담당
+- ## UIWindow 객체의 역할은 무엇인가?
+  - 사용자 인터페이스에 배경(backdrop)을 제공하고, 중요한 이벤트 처리 행동(behaviors)을 제공하는 객체
+- ## UINavigationController 의 역할이 무엇인지 설명하시오.
+  - UINavigationController는 앱의 화면 이동에 대한 관리와 그에 연관된 처리를 담당해주는 컨트롤러입니다. 이는 네비게이션 바와 툴바를 두 가지를 보여주는 역할을 합니다. 네비게이션 바에서는 뒤로 가기 버튼과 커스터마이징한 버튼을 추가할 수 있으며 옵션으로 툴바 뷰도 제공합니다
+- ## TableView를 동작 방식과 화면에 Cell을 출력하기 위해 최소한 구현해야 하는 DataSource 메서드를 설명하시오.
+  - numberOfRowInSection 섹션에 표시할 행의 개수
+  - cellForRowAt 특정 위치에 표시할 셀을 요청하는 메서드
+- ## 하나의 View Controller 코드에서 여러 TableView Controller 역할을 해야 할 경우 어떻게 구분해서 구현해야 하는지 설명하시오.
+  - func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell 에서 파라미터로 받는 tableView 를 객체 비교를 통해 구분한다.
+  - 테이블 뷰의 Tag 를 등록, 비교해서 구분한다.
+- ## setNeedsLayout와 setNeedsDisplay의 차이에 대해 설명하시오.
+  - setNeedsLayout()메소드와 setNeedsDisplay() 메소드 모두 호출 즉시 실행되지 않고 다음 update cycle에 변경사항이 적용됩니다.
+  - setNeedsLayout은 layoutSubview메소드를 setNeedsDisplay는 draw메소드를 시스템이 호출하게끔 유도한다.
+  - setNeedsLayout() 메소드는 모든 핸들러가 종료되고 권한이 main run loop로 돌아오는 시점에 view의 position이나 layout에 관한 변화를 적용시키고 setNeedsDisplay() 메소드는 다음 드로잉 사이클이 오면 그 때 쌓여있는 그려야할 컨텐츠들을 동시에 적용시킵니다.
+- ## NSCache와 딕셔너리로 캐시를 구성했을때의 차이를 설명하시오.
+  - 딕셔너리는 메모리가 부족하면 값을 삭제하는 코드를 작성해야 하지만 NSCache는 메모리가 자동으로 관리된다.
+  - NSCache 는Thread-safe하다. 데이터를 쓸때마다 lock을 해줄 필요가 없다.
+- ## URLSession에 대해서 설명하시오.
+  - 앱과 서버 간 데이터를 주고 받기 위해 사용하는 Apple의 기본 API URLSessionConfiguration 설정하고 URLSession·URLComponents 생성, 이를 통해 URLSessionDataTask 생성 한 뒤, 마지막으로 테스크를 실행하는 과정을 거친다.
+- ## prepareForReuse에 대해서 설명하시오.
+  - tableView의 cell을 재사용하기 위해 셀 속성을 reset하는 함수입니다. dequeueReusableCell 메서드에서 객체가 반환되기 직전에 호출됩니다.
+- ## ViewController의 생명주기를 설명하시오.
+  - init ViewController 객체가 생성됩니다.
+  - loadView View를 메모리에 로드합니다.
+  - viewDidLoad View의 Controller가 메모리에 로드된 뒤 호출됩니다.
+  - viewWillAppear View가 표시되기 직전에 호출됩니다.
+  - viewDidAppear View가 표시된 후 호출됩니다.
+  - viewWillDisappear View가 사라지기 직전 호출됩니다.
+  - viewDidDisappear View가 사라지기 직후 호출됩니다.
+  - viewDidUnload View가 메모리에서 해제된 뒤 호출됩니다.
+- ## TableView와 CollectionView의 차이점을 설명하시오.
+  - 테이블뷰에서는 하나의 열에 여러 행의 cell을 표현하는 방식이기때문에, cell의 모양은 항상 row에 맞춰서 디자인 해야한다.
+  - 컬렉션뷰는 행과 열을 모두 만들 수 있기 때문에 cell의 모양을 자유롭게 디자인이 가능하다.
+- ## 오토레이아웃을 코드로 작성하는 방법은 무엇인가? (3가지)
+  - 1. NSLayoutConstraint 사용
+
+  - 2. Visual Format Language 사용
+
+  - 3. Anchor 사용
 
 # ARC
 - ## ARC란 무엇인지 셜명하시오.
