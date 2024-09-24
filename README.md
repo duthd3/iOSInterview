@@ -302,7 +302,6 @@ enum 값 타입
   - 래핑된 값 또는 값이 없는 nil 상태를 표현하는 형식이며, enum 구조를 뛰고 있다. 값이 있고 래핑된 some case 제네릭 형태 그리고 값이 없는 nil상태 none 케이스
 - ## Struct 가 무엇이고 어떻게 사용하는지 설명하시오.
   - 인스턴스의 값(프로퍼티)을 저장하거나, 기능(메소드)를 제공하고 이를 캡슐화할 수 있도록 스위프트가 제공하는 타입입니다.
-
 - ## Subscripts에 대해 설명하시오.
    - Class, Struct, Enum에서 collection, 순열, list, sequence 등 집합의 특정 멤버 요소에 쉽게 접근하기 위한 방법입니다.
   - 이것을 이용하면 추가적인 메소드없이 특정 값을 할당(set)하거나 가져(get)올 수 있습니다.
@@ -368,10 +367,26 @@ enum 값 타입
   - private: 같은 scope내에서만 접근가능(제한 높음)
 - ## defer란 무엇인지 설명하시오.
   - 현재 코드 블록을 나가기 전에 꼭 실행해야 되는 코드를 작성하여 코드가 블록을 어떻게 빠져 나가든 꼭 마무리 해
-
-
-
-
+- ## property wrapper에 대해서 설명하시오.
+  - 프로퍼티를 감싸 특별한 타입으로 만들어준다.
+  - 어떤 로직들을 매번 동일하게 지정해주지 않고 Property Wrapper로 만든 타입으로 프로퍼티를 선언해 동일 로직을 수행한다.
+  - 지역변수에만 사용가능합니다.
+- ## Genericc에 대해 설명하시오.
+  - 제네릭이란 타입에 의존하지 않는 범용 코드를 작성할 때 사용한다.
+  - 제네릭을 사용하면 중복을 피하고, 코드를 유연하게 작성할 수 있다.
+- ## some 키워드에 대해 설명하시오.
+  - some 키워드는 return값에 불투명한 타입이 있음을 나타냅니다. 불투명한 타입이란 어떠한 타입을 리턴할지 모른다는 것입니다. some 키워드를 사용하면 함수 내부의 리턴 값에 따라 리턴 타입이 지정됩니다.
+- ## Result 타입에 대해 설명하시오.
+  - Result 타입은 Generic Enumeration로 선언되어 있고, 경우에 따른 연관값을 포함하여, 성공과 실패를 나타내는 값입니다.
+- ## Codable에 대하여 설명하시오.
+  - 기존의 Encodable과 Decodable이 합쳐진 프로토콜 입니다.
+  - Encodable -> data를 Encoder에서 변환해주려는 프로토콜로 바꿔주는 것
+  - Decodable -> data를 원하는 모델로 Decode 해주는 것
+- ## Clousre에 대하여 설명하시오.
+  - 참조타입이다.
+  - 클로저는 사용자의 코드 안에서 전달되어 사용할 수 있는 로직을 가진 중괄호 {} 로 구분된 코드의 블럭이며, 일급 객체의 역할을 할 수 있다.
+- ## Clousre와 함수와의 관계에 대해 설명하시오.
+  - 함수는 클로저의 한 형태로, 이름이 있는 클로저이다.
 
 
 # ARC
@@ -384,6 +399,49 @@ enum 값 타입
   - Strong은 해당 인스턴스의 소유권을 가진다. 자신이 참조하는 인스턴스의 reference count를 증가시킨다. 값 지정 시점에 retain되고, 참조가 종료되는 시점에 release가 된다. 메모리릭이 발생할 수 있다(순환 참조). 해결책이 바로 약한참조(weak, unowned)이다.
   - Weak는 해당 인스턴스의 소유권을 가지지 않고, 주소값만 가지고 있는 포인터 개념이다. 자신이 참조하는 인스턴스의 reference count를 증가시키지 않는다(release도 발생하지 않음.). 자신이 참조는 하지만 weak 메모리를 해제시킬 수 있는 권한은 다른 클래스에 있다. 메모리가 해제될 경우 자동으로 레퍼런스가 nil로 초기화를 해준다. weak 속성을 사용하는 객체는 항상 optional 타입이어야 한다(해당 객체가 nil일 수 있기 때문에)
   - Unowned는 Weak와 비슷하지만 인스턴스를 참조하는 도중에 해당 인스턴스가 메모리에서 사라질 일이 없다고 확신하는 것이 핵심이다. 참조하던 인스턴스가 메모리에서 해제되도, nil을 할당받지 못하고 해제된 메모리 주소값을 계속 가지고 있다.
+- ## 순환 참조에 대하여 설명하시오.
+  - 순환 참조란 여러 클래스 인스턴스가 서로간에 강한 참조상태(Strong Reference)를 가질 때 발생하고, 순환 참조가 발상하게되면 서로간의 참조가 해제되지 않기 때문에 메모리 누수(Leak)가 발생할 수 있다.
+```swift
+class Person {
+  var name: String
+  var puppy: Puppy?
+
+  init(name: String) {
+    self.name = name
+  }
+
+  deinit {
+    print("Person deinit")
+  }
+}
+class Puppy {
+  var name: String
+  var owner: Person?
+
+  init(name: String) {
+    self.name = name
+  }
+
+  deinit {
+    print("Puppy deinit")
+  }
+}
+
+var john: Person? = Person(name: "John")
+var jackson: Puppy? = Puppy(name: "Jackson")
+
+john?.puppy = jackson
+jackson?.owner = john
+```
+위의 코드의 클래스 인스턴스 프로퍼티를 보면 변수로만 정의되어 있다. 이는 Strong이 생략된 상태이다. 따로 정의한 키워드가 없다면 default값은 Strong이다.
+- ## 강한 순환 참조(Strong Reference Cycle)는 어떤 경우에 발생하는지 설명하시오.
+```swift
+john = nil
+jackson = nil
+```
+아직 클래스 인스턴스가 메모리에서 해제되지 않아 deinit이 호출되지 않는다,.
+클래스 인스턴스의 프로퍼티끼리 서로를 참조하는데 이것들이 있으므로 RC가 0이 되지 않아 deinit을 호출하지 않고, 정상적으로 메모리에서 해제되지 않아 메모리 누수가 발생하고 있는 것이다.
+weak 키워드를 붙임으로써 약한 참조임을 선언할 수 있다. 클래스 인스턴스를 참조해도, RC를 증가시키지 않는다. 서로 참조하던 클래스 인스턴스 중 하나가 메모리에서 해제되면, 다른 클래스 인스턴스에도 자동으로 nil이 할당되어 메모리에서 해제된다.
 
 # Functional Programming
 - ## 순수함수란 무엇인지 설명하시오.
