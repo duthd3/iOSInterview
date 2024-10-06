@@ -1218,4 +1218,12 @@ weak 키워드를 붙임으로써 약한 참조임을 선언할 수 있다. 클�
       - Attribute: 객체가 가지는 데이터의 타입과 제약조건을 나타냅니다. entity가 클래스라면, attribute는 프로퍼티에 해당합니다.
       - Relationship: 서로 다른 Entity를 각자의 모델 계층에 추가해 사용하는 방법입니다.
     - ### 코어 데이터에서 데이터를 가져오는 방법(Fetch Request)에 대해 설명해주세요.
+      - Core Data에 저장된 데이터를 가져오기 요청 작업을 위한 전용 property wrapper이다.
+      - FetchRequest는 SwiftUI 뷰에 별도 로직 없이 직접 추가가 가능하다.
     - ### 코어 데이터 마이그레이션(Migration)은 언제 필요한가요?
+      - 마이그레이션은 앱 개발 과정에서 data Model을 변경할 때의 기존의 Data와의 호환성을 유지하면서 새로운 Data Model로 이전하기 위한 과정이다. 앱을 개발하는 동안 새로운 속성이나 엔티티를 추가하거나 기존의 속성과 엔티티를 제거하거나 변경하는 경우가 있다. 이때 기존 사용자가 데이터가 새로운 Data Model과 호환될 수 있도록 이전해주어야한다.
+  - ## 17. Swift의 high-order functions에 대해 설명해주세요.
+    - ### map()과 compactMap()의 차이점은 무엇인가요?
+    - ### filter()와 reduce()는 어떤 경우에 사용하나요?
+    - ### flatMap()을 사용하는 경우를 예시로 들어주세요.
+    - 
