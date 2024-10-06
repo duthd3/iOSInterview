@@ -1223,7 +1223,49 @@ weak 키워드를 붙임으로써 약한 참조임을 선언할 수 있다. 클�
     - ### 코어 데이터 마이그레이션(Migration)은 언제 필요한가요?
       - 마이그레이션은 앱 개발 과정에서 data Model을 변경할 때의 기존의 Data와의 호환성을 유지하면서 새로운 Data Model로 이전하기 위한 과정이다. 앱을 개발하는 동안 새로운 속성이나 엔티티를 추가하거나 기존의 속성과 엔티티를 제거하거나 변경하는 경우가 있다. 이때 기존 사용자가 데이터가 새로운 Data Model과 호환될 수 있도록 이전해주어야한다.
   - ## 17. Swift의 high-order functions에 대해 설명해주세요.
+    - 고차함수는 다른 함수를 인자로 받거나, 함수의 결과로 함수를 반환하는 함수를 의미합니다. 스위프트에서는 map, filter, reduce가 콜렉션 타입 내에 정의되어 있습니다.
     - ### map()과 compactMap()의 차이점은 무엇인가요?
+      - map은 콜렉션 내부의 데이터를 가공하여 새로운 콜렉션을 생성합니다.
+        ```swift
+        let numbers = [1, 2,3, 4, 5]
+        let numbersPlusOne = numbers.map({ $0 + 1 })
+        ```
+      - compactMap은 옵셔널 바인딩을 지원하는 map입니다.
+      - nil 값을 제외한 새로운 콜렉션을 만들어낼 수 있습니다.
+        ```swift
+        let students: [String?] =  ["Mike", "Jane", nil, "John", nil]
+        let greatStudents = students.compactMap({$0}).map({"Great" + $0})
+        ```
     - ### filter()와 reduce()는 어떤 경우에 사용하나요?
+      - filter()는 콜렉션 내부에서 조건에 맞는 데이터들만 골라 새로운 콜렉션을 생성합니다.
+        ```swift
+        let numbers = [1, 2, 3, 4, 5]
+        let numberGreaterThanTwo = numbers.filter({ $0 > 2})
+        ```
+      - reduce()는 콜렉션 내부의 데이터들을 하나로 통합시킵니다. 다른 고차함수들과는 다르게 reduce()는 두 개의 인자를 받습니다. 첫번째 인자는 통합할 데이터의 초기값입니다. 첫번째 인자는 통합할 데이터의 초기값입니다. 두번째 인자는 클로저인데 , 이 클로저에서는 첫번째 파라미터는 바로 이전 값에 대한 통합된 데이터를 의미하고, 두번쨰는 이번에 새로 통합할 데이터를 의미합니다.
+        ```swift
+        let numers = [1, 2, 3, 4, 5]
+        let numberSum = numbers.reduce(0, { $0 + $1 })
+        let numberSumShortcut = numbers.reduce(0, +)
+        ```
     - ### flatMap()을 사용하는 경우를 예시로 들어주세요.
-    - 
+      - FlatMap은 2차원 배열에 나우어져있는 데이터들을 1차원 배열로 합쳐주는 기능이 포함되어 있습니다.
+      ```swift
+      let students = [["Mike", nil], [nil, nil, "Jane"], ["John"]]
+      let goodStudents = students.flatMap({$0})
+      print(goodStudents) // [Optional("Mike"), nil, nil, nil, Optional("Jane"), Optional("John")]
+      let greatStudents = students.flatMap({$0}).compactMap({$0})
+      print(greatStudents) // ["Mike", "Jane", "John"]
+      ```
+  - ## 19. iOS 개발을 위한 라이브러리 관리도구(CocoaPods, Carthage, Swift Package Manaer)의 차이점과 사용법을 설명해주세요.
+    - ### 1. CocoaPods
+      - Swift와 Objc에 사용할 수 있는 중앙 집중식 종속성 관리자로 오픈소스입니다.
+      - Ruby로 제작되어 있습니다.
+      - Main Repository인 Spaces에 중앙화 되어있습니다.
+      - Podfile에 사용할 라이브러리만 명시해주면 바로 사용이 가능합니다.
+      - 모든 Apple 플랫폼을 지원합니다.
+      - 터미널을 통해 설치 및 사용합니다.
+    - ### 2. SPM
+      - 3rd party tool이 아닌 1st party입니다.
+      - 자체 빌드 시스템이 포함되어 있고, 소프트웨어의 구성과 테스트, 실행까지 포함하고 있습니다.
+      - SPM은 내부 모듈에 사용되는 dependency를 자동으로 관리해주고, dependency를 추가 또는 변경할 때마다 pod install이라는 부가 작업을 하지 않아도 됩니다.
