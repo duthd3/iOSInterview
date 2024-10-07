@@ -576,4 +576,85 @@
       - 3rd party tool이 아닌 1st party입니다.
       - 자체 빌드 시스템이 포함되어 있고, 소프트웨어의 구성과 테스트, 실행까지 포함하고 있습니다.
       - SPM은 내부 모듈에 사용되는 dependency를 자동으로 관리해주고, dependency를 추가 또는 변경할 때마다 pod install이라는 부가 작업을 하지 않아도 됩니다.
+  - ## 20. iOS 앱에서 URL Scheme을 사용하여 다른 앱과 통신하는 방법과 주의 사항을 설명해주세요.
+    - 모든 URL 매개변수의 유효성을 검사하고 잘못된 URL은 모두 삭제해야 합니다.
+    - 메서드에 전달할 URL을 따로 앱 info.plist파일에 키를 추가해줘야 한다.
+    ```swift
+    if UIApplication.shared.canOpenURL(url) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    } else {
+        print("error")
+    }
+  - ## 21. Xcode의 인스트루먼트(Instruments)를 활용하여 앱의 성능을 분석하고 최적화하는 방법은 무엇인가요?
+    - 하나 이상의 앱 또는 프로세스의 동작 검사
+    - Wi-Fi 및 Bluetooth와 같은 장치별 기능 검사
+    - 시뮬레이터 또는 디바이스에서 프로파일링 수행
+    - 소스 코드의 문제 추적
+    - 앱에 대한 성능 분석 수행
+    - 누수, 버려진 메모리 및 좀비 앱의 메모리 문제 찾기
+    - 더 높은 효율성을 위해 앱을 최적화하는 방법 식별
+    - 시스템 수준 문제 해결 수행
+    - 일반적으로 CPU > MEMORY > DISK > NETWORK 순으로 측정
+    - ### Xcode의 디버깅 도구(Breakpoints, Logging 등)를 활용하여 효과적으로 디버깅하는 방법을 소개해주세요.
+    - ### 타임 프로파일러(Time Profiler)를 사용하여 앱의 병목 현상을 찾는 방법을 설명해주세요.
+      - 타임 프로파일러는 앱의 병목 현상을 찾아내는 데 매우 유용합니다.
+      - Time Profiler를 시작하고 앱을 실제 사용 시나리오에 따라 사용합니다.
+      - Call Tree: 각 함수의 호출 빈도와 소요 시간을 확인할 수 있습니다.
+      - Symbol List: 함수 목록에서 가장 많은 시간을 소모하는 함수를 찾습니다. 이곳에서 주요 병목 현상을 발견할 수 있습니다.
+      - Statistics: 각 함수의 CPU 사용량을 시각적으로 보여주는 그래프를 통해 성능 저하의 원인을 분석합니다.
+      - Self Time: 함수가 자체적으로 소모한 시간으로, 이 값이 높으면 해당 함수의 최적화가 필요합니다.
+      - Total Time: 해당 함수가 다른 함수에 호출된 시간을 포함하여 총 소요 시간을 나타냅니다. 이 값이 높으면 호출 빈도나 성능 개선이 필요할 수 있습니다.
+      - 병목현상이 발견되면, 비동기 작업이나 캐싱 등을 통해 성능을 개선할 수 있습니다.
+    - ### 얼로케이션 프로파일러(Allocations Profiler)를 사용하여 메모리 사용량을 분석하는 방법은 무엇인가요?
+      - 얼로케이션 프로파일러는 메모리 할당을 추적하고, 어떤 객체가 얼마나 많은 메모리를 사용하는지 확인하는 데 유용합니다.
+    - ### 레이아웃 디버깅(Layout Debugging)을 통해 오토레이아웃 문제를 해결하는 방법을 설명해주세요.
+      - Auto Layout에서 오류가 발생하는 이유는 필요한 제약이 추가되지 않은 경우, 필요 이상의 제약이 중복되 있는 경우이다.
+      - 따라서 레이아웃 디버깅을 통해서 필요한 제약을 추가하거나 중복된 제약을 제거한다.
+  - ## 22. Swift에서 Any와 AnyObject의 차이점은 무엇인가요?
+    - Any는 함수 타입을 포함해서 모든 타입의 인스턴스를 나타낼 수 있다.
+    - AnyObject는 모든 클래스 타입의 인스턴스를 나타낼 수 있다.
+  - ## 23. iOS 앱에서 NotificationCenter를 사용하는 목적과 사용 방법을 설명해주세요.
+    - notification이 오면 observer pattern을 통해서 등록된 옵저버에게 notification을 전달하기 위해 사용하는 클래스이다.
+    - notification을 발송하면 NotificationCenter에서 메세지를 전달한 observer를 처리할 떄까지 대기한다.
+    ```swift
+    // Notification Name 설정
+    extension Notification.Name {
+        static let secret = Notification.Name("Shh")
+    }
 
+    // Notification과 관련된 인스턴스
+    enum NotificationKey {
+        case password
+    }
+
+    class Master {
+        func callPassword() {
+            print("마스터: 암호를 대세요.")
+            // NotificationCenter로 Post하기 (발송하기)
+            NotificationCenter.default.post(name: NotificationName.secret, object: nil, userInfo: [NotificationKey.password: "!@#$"])
+        }
+    }
+
+    class Friend {
+        let name: String
+        init(name: String) {
+            self.name = name
+            // NotificationCenter에 Observer 등록하기
+            NotificationCenter.default.addObserver(self, selector: #selector(answerToMaster(notification:)), name: Notification.Name.secret, object: nil)
+        }
+        @objc func answerToMaster(notification: Notification) {
+            // notification.userInfo 값을 받아온다.
+            guard let object = notification.userInfo?[NotificationKey.password] as? String else { return }
+            print("\(name): 암호는 \(object)")
+        }
+    }
+
+    let master = Master()
+
+    // observer
+    let ariOne = Friend(name: "원")
+    let ariTwo = Friend(name: "투")
+    let ariThree = Friend(name: "쓰리")
+
+    master.callPassword() // observer들에게 일을 수행하라고 시킨다.
+    ```
